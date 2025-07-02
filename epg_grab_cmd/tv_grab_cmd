@@ -1,0 +1,48 @@
+#!/bin/sh
+
+# License: Use at your own risk.  Do what you want with it, but don't be evil.
+# Copyright (C) 2025 DeltaMikeCharlie
+#
+# Script to get XMLTV data from a command.
+# eg: tv_grab_cmd "curl http://[TVH_IP]:[TVH_PORT]/xmltv/channels"
+# The entire 'command' needs to be in quotes.
+
+show_desc=0
+show_ver=0
+show_cap=0
+do_cmd=1
+
+for arg in "$@"
+do
+  if [ "$arg" = "-d" ];             then { show_desc=1; do_cmd=0; }; fi
+  if [ "$arg" = "--description" ];  then { show_desc=1; do_cmd=0; }; fi
+  if [ "$arg" = "-v" ];             then { show_ver=1;  do_cmd=0; }; fi
+  if [ "$arg" = "--version" ];      then { show_ver=1;  do_cmd=0; }; fi
+  if [ "$arg" = "-c" ];             then { show_cap=1;  do_cmd=0; }; fi
+  if [ "$arg" = "--capabilities" ]; then { show_cap=1;  do_cmd=0; }; fi
+done
+
+#Execute the command if no other arguements are present.
+if [ "$do_cmd" = "1" ]
+then
+  eval "$1"
+fi
+
+#Show the script description if requested.
+if [ "$show_desc" = "1" ]
+then
+  echo "Get EPG from a command"
+fi
+
+#Show the script version if requested.
+if [ "$show_ver" = "1" ]
+then
+  echo "1.0"
+fi
+
+#Show the script capabilities if requested.
+if [ "$show_cap" = "1" ]
+then
+  echo "baseline"
+fi
+
